@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ONPE - Oficina Nacional de Procesos Electorales</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="{{ url_for('static', filename='css/fontawesome.min.css') }}" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" media="screen"/>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="pull-left logo-onpe">
+                <div class="pull-left">
+                    <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/onpe-trans.png') }}" alt="Logo ONPE"></a>
+                </div>
+                <div class="pull-left">
+                    <h1>PRESENTACIÓN DE RESULTADOS</h1>
+                </div>
+            </div>
+            <div class="pull-right logo">
+                <img src="{{ url_for('static', filename='images/eegg2016-trans.png') }}" width="218" height="35" alt="Logo EGG 2016">
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/f-actas.jpg') }}" width="1170" height="248" class="img-responsive mg30top">
+
+        <section class="menu navbar-default menu05">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <a name="posicion"></a>
+            <nav class="navbar-collapse bs-navbar-collapse collapse" aria-expanded="false">
+                <ul class="nav navbar-nav">
+                    <li class="bt-azul">
+                        <a href="presidencial.html">PRESIDENCIAL</a>
+                    </li>
+                    <li class="bt-amarillo act-amarillo">
+                        <a href="{{url_for('actas_numero')}}">ACTAS</a>
+                    </li>
+                    <li class="bt-rojo">
+                        <a href="{{url_for('participacion')}}">PARTICIPACIÓN CIUDADANA</a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+
+        <div id="page-wrap">
+            <br>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <form id="myform" name="myform" class="horizontal-form" action="{{ url_for('actas_numero_id', id=0) }}" method="GET">
+                <div class="col-md-3">
+                    INGRESE EL NÚMERO DE ACTA:
+                </div>
+        
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <span id="spanNroMesa">
+                            <input id="nroMesa" name="nroMesa" type="text" maxlength="6" class="form-control" value="">
+                        </span>
+                    </div>
+                </div>
+        
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> BUSCAR
+                    </button>
+                </div>
+            </form>
+        </div>        
+
+        <div id="divDetalle" class="ptop20">
+            {% if actas %}
+            <div class="contenido-resultados">
+                <div class="tab-info-desc">
+                    <div class="row contenedor-acta">
+                        <div class="mesap01">
+                            <img src="{{ url_for('static', filename='images/mp-sin.jpg') }}" class="img-responsive">
+                            <p class="text-center">Si requiere la imagen del acta, solicítela a través del procedimiento de acceso a la información pública.</p>
+                        </div>
+                        <div class="info-acta">
+                            <div class="col-xs-12">
+                                <p class="subtitle1">ACTA ELECTORAL</p>
+                                <table class="table13" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Mesa N°</th>
+                                            <th>N° Copia</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ actas['idGrupoVotacion'] }}</td>
+                                            <td>{{ actas['nCopia'] }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="subtitle1">INFORMACIÓN UBIGEO</p>
+                                <table class="table14" cellspacing="0">
+                                    <tbody>
+                                        <tr class="titulo_tabla">
+                                            <td>Departamento</td>
+                                            <td>Provincia</td>
+                                            <td>Distrito</td>
+                                            <td>Local de votación</td>
+                                            <td>Dirección</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ actas['Departamento'] }}</td>
+                                            <td>{{ actas['Provincia'] }}</td>
+                                            <td>{{ actas['Distrito'] }}</td>
+                                            <td>{{ actas['RazonSocial'] }}</td>
+                                            <td>{{ actas['Direccion'] }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="subtitle1">INFORMACIÓN MESA</p>
+                                <table class="table15" cellspacing="0">
+                                    <tbody>
+                                        <tr class="titulo_tabla">
+                                            <td>Electores hábiles</td>
+                                            <td>Total votantes</td>
+                                            <td>Estado del acta</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ actas['ElectoresHabiles'] }}</td>
+                                            <td>{{ actas['TotalVotantes'] }}</td>
+                                            <td>ACTA ELECTORAL NORMAL</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="subtitle1">INFORMACIÓN DEL ACTA ELECTORAL</p>
+                            <table class="table06">
+                                <tbody>
+                                    <tr class="titulo_tabla">
+                                        <td colspan="2">Organización política</td>
+                                        <td>Total de Votos</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PERUANOS POR EL KAMBIO</td>
+                                        <td><img width="40px" height="40px" src="{{ url_for('static', filename='images/simbolo_pkk.jpg') }}"></td>
+                                        <td>{{ actas['P1'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>FUERZA POPULAR</td>
+                                        <td><img width="40px" height="40px" src="{{ url_for('static', filename='images/simbolo_keyko.jpg') }}"></td>
+                                        <td>{{ actas['P2'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">VOTOS EN BLANCO</td>
+                                        <td>{{ actas['VotosBlancos'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">VOTOS NULOS</td>
+                                        <td>{{ actas['VotosNulos'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">VOTOS IMPUGNADOS</td>
+                                        <td>{{ actas['VotosImpugnados'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">TOTAL DE VOTOS EMITIDOS</td>
+                                        <td>{{ actas['TotalVotantes'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% elif search_attempted %}
+            <div class="tab-info">EL NÚMERO DE MESA QUE HA INGRESADO NO EXISTE</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer class="footer-inside">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 direc01">
+                    <span>CONTÁCTENOS</span>
+                    <p>Jr. Washington 1894, Cercado de Lima </p>
+                    <p>Correo electrónico: <a href="mailto:informes@onpe.gob.pe">informes@onpe.gob.pe</a></p>
+                    <p>Central Telefónica: 417 - 0630 / Lunes a Viernes 08:30 - 16:30 hrs</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/actas_numero.js') }}"></script>
+</body>
+</html>
